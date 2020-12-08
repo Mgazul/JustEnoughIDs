@@ -10,7 +10,6 @@ buildscript {
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
         classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
-	    classpath 'com.wynprice.cursemaven:CurseMaven:2.1.1'
     }
 }
 
@@ -20,37 +19,7 @@ apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "org.spongepowered.mixin"
 
 repositories {
-    maven { url = "http://dvs1.progwml6.com/files/maven" }
-    maven { url = "https://minecraft.curseforge.com/api/maven" }
-    maven { url "http://maven.tterrag.com" }
-    maven { url "https://maven.blamejared.com" }
-    maven { url "https://maven.mcmoddev.com/" }
     maven { url "http://repo.spongepowered.org/maven" }
-    maven { url "https://maven.blamejared.com" }
-    maven { url "http://maven.tterrag.com" }
-    maven { url = "https://minecraft.curseforge.com/api/maven" }
-	    maven {
-        url = "http://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        name = "buildcraft"
-        url = "https://mod-buildcraft.com/maven"
-    }
-    maven {
-        name = "thiakil"
-        url = "http://maven.thiakil.com"
-    }
-    maven {
-        url = "http://dvs1.progwml6.com/files/maven"
-    }	
-    maven {
-        url = "https://www.cursemaven.com"
-    }	
-    ivy {
-        url "https://google.com/404"
-        ivyPattern("https://google.com/404") // Workaround for https://github.com/gradle/gradle/issues/4107
-        artifactPattern("https://media.forgecdn.net/files/[organisation]/[module]/[revision].[ext]")
-    }
 }
 
 dependencies {
@@ -63,35 +32,13 @@ dependencies {
         exclude module: "gson"
         exclude module: "commons-io"
     }
-    compileOnly "2555:531:BiomesOPlenty-1.12.2-7.0.1.2384-universal@jar"
-    compileOnly "2686:476:twilightforest-1.12.2-3.9.888-universal@jar"
-    compileOnly "2629:23:Thaumcraft-1.12.2-6.1.BETA26@jar"
-    compileOnly "2691:339:AbyssalCraft-1.12.2-1.9.6@jar"
-    compileOnly "2655:432:Creeping+Nether-2.2.2@jar"
-    compileOnly "2497:541:GeographiCraft-1.12-0.8.9b@jar"
-    compileOnly "2699:673:mystcraft-1.12.2-0.13.7.03@jar"
-    compileOnly "2710:204:HammerCore-1.12.2-2.0.4.7@jar"
-    compileOnly "2733:984:AdvancedRocketry-1.12.2-1.6.0-151-universal@jar"
-    compileOnly "2731:147:LibVulpes-1.12.2-0.4.1-59-universal@jar"
-    compileOnly "2655:56:worldedit-forge-mc1.12.2-6.1.10-SNAPSHOT-dist@jar"
-    compileOnly "2682:920:journeymap-1.12.2-5.5.4@jar"
-    compileOnly "2683:823:Bookshelf-1.12.2-2.3.577@jar"
-    compileOnly "2691:93:CyclopsCore-1.12.2-1.1.1@jar"
-    compileOnly "2678:374:extrautils2-1.12-1.9.9@jar"
-    compileOnly "2683:667:TheBetweenlands-3.4.6-universal@jar"
-    compileOnly "2692:524:TofuCraftReload-0.0.2.1@jar"
-    compileOnly "2636:492:tropicraft-MC1.12.2-7.1.8.105@jar"
-    compileOnly "2724:738:gaiadimension-1.12.2-1.0.5@jar"
-    compileOnly "2572:722:BiomeTweaker-1.12.2-3.2.354@jar"
-    compileOnly "com.azanor.baubles:Baubles:1.12-1.5.2"
-    compileOnly "vazkii.patchouli:Patchouli:1.0-20.99"
-    compileOnly "curse.maven:bewitchment:3038090"
+    compile 'org.jetbrains:annotations:18.0.0'
 }
 
 def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
 def versionSuffix = travisBuildNumber != null ? travisBuildNumber : "SNAPSHOT"
 
-version "1.0.3-$versionSuffix"
+version "1.0.3-$versionSuffix-m"
 group "org.dimdev.jeid"
 archivesBaseName = "JustEnoughIDs"
 

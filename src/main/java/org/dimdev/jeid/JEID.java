@@ -12,38 +12,24 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeVoid;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.dimdev.jeid.network.MessageManager;
 
 import java.util.Random;
 
-@Mod(modid = "jeid",
-     name = "JustEnoughIDs",
-     updateJSON = "https://gist.githubusercontent.com/Runemoro/67b1d8d31af58e9d35410ef60b2017c3/raw/1fe08a6c45a1f481a8a2a8c71e52d4245dcb7713/jeid_update.json")
+@Mod(modid = "jeid", name = "JustEnoughIDs")
 public class JEID {
     private static final boolean DEBUG_BLOCK_IDS = false;
     private static final boolean DEBUG_ITEM_IDS = false;
-    private static final boolean DEBUG_BIOME_IDS = false;
     private static final boolean DEBUG_POTION_IDS = false;
     private static final boolean DEBUG_ENCHANT_IDS = false;
-    public static final Biome errorBiome = new BiomeVoid(new Biome.BiomeProperties("A mod doesn't support extended biome IDs -- report to JEID"))
-            .setRegistryName("jeid:error_biome");
 
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        // Register messages
-        MessageManager.init();
-
-        // Error Biome Registration
-        GameRegistry.findRegistry(Biome.class).register(errorBiome);
-
         // Debug code
         if (DEBUG_BLOCK_IDS) {
             IForgeRegistry<Block> blockRegistry = GameRegistry.findRegistry(Block.class);
@@ -66,16 +52,6 @@ public class JEID {
                         .setRegistryName(new ResourceLocation("jeid:item_" + i));
 
                 itemRegistry.register(item);
-            }
-        }
-
-        if (DEBUG_BIOME_IDS) {
-            IForgeRegistry<Biome> biomeRegistry = GameRegistry.findRegistry(Biome.class);
-            for (int i = 0; i < 300; i++) {
-                Biome biome = new Biome(new Biome.BiomeProperties("Biome " + i)) {}
-                        .setRegistryName(new ResourceLocation("jeid:biome_" + i));
-
-                biomeRegistry.register(biome);
             }
         }
 

@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 
 @Mixin(PacketBuffer.class)
@@ -23,7 +23,8 @@ public abstract class MixinPacketBuffer {
 
     @Shadow public abstract int readVarInt();
 
-    @Shadow @Nullable public abstract NBTTagCompound readCompoundTag() throws IOException;
+    @Shadow @Nullable
+    public abstract NBTTagCompound readCompoundTag() throws IOException;
 
     @Shadow public abstract PacketBuffer writeVarInt(int input);
 

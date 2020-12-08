@@ -8,11 +8,9 @@ import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import org.dimdev.jeid.INewBlockStateContainer;
-import org.dimdev.jeid.INewChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -35,44 +33,5 @@ public class MixinAnvilChunkLoader {
                                  ExtendedBlockStorage extendedBlockStorage, NBTTagCompound storageNBT, byte[] blocks, NibbleArray data, NibbleArray add) {
         int[] palette = ((INewBlockStateContainer) extendedBlockStorage.getData()).getTemporaryPalette();
         if (palette != null) storageNBT.setIntArray("Palette", palette);
-    }
-
-    /** @reason Read int biome array from NBT if it's there. */
-    @Inject(method = "readChunkFromNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NBTTagCompound;hasKey(Ljava/lang/String;I)Z", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void readBiomeArray(World world, NBTTagCompound nbt, CallbackInfoReturnable<Chunk> cir,
-                                int ignored0, int ignored1,
-                                Chunk chunk,
-                                NBTTagList ignored2, int ignored3, ExtendedBlockStorage[] ignored4, boolean ignored5) {
-        INewChunk newChunk = (INewChunk) chunk;
-        if (nbt.hasKey("Biomes", 11)) {
-            newChunk.setIntBiomeArray(nbt.getIntArray("Biomes"));
-        } else {
-            // Convert old chunks
-            int[] intBiomeArray = new int[256];
-            int index = 0;
-            for (byte b : nbt.getByteArray("Biomes")) {
-                intBiomeArray[index++] = b & 0xFF;
-            }
-            newChunk.setIntBiomeArray(intBiomeArray);
-        }
-    }
-
-    /** @reason Disable default biome array save logic. */
-    @Redirect(method = "writeChunkToNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NBTTagCompound;setByteArray(Ljava/lang/String;[B)V", ordinal = 6))
-    private void defaultWriteBiomeArray(NBTTagCompound nbt, String key, byte[] value) {
-        if (!key.equals("Biomes")) throw new AssertionError("Ordinal 6 of setByteArray isn't \"Biomes\"");
-    }
-
-    /** @reason Disable default biome array save logic. */
-    @Redirect(method = "writeChunkToNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;getBiomeArray()[B", ordinal = 0))
-    private byte[] defaultWriteBiomeArray(Chunk chunk) {
-        return new byte[0];
-    }
-
-    /** @reason Save the correct biome array type */
-    @Inject(method = "writeChunkToNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NBTTagCompound;setByteArray(Ljava/lang/String;[B)V", ordinal = 6))
-    private void writeBiomeArray(Chunk chunk, World worldIn, NBTTagCompound nbt, CallbackInfo ci) {
-        INewChunk newChunk = (INewChunk) chunk;
-        nbt.setIntArray("Biomes", newChunk.getIntBiomeArray());
     }
 }

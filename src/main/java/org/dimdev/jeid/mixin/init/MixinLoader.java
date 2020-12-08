@@ -39,10 +39,6 @@ public class MixinLoader {
             }
         }
 
-        // Add and reload mixin configs
-        Mixins.addConfiguration("mixins.jeid.modsupport.json");
-        Mixins.addConfiguration("mixins.jeid.twilightforest.json");
-
         Proxy mixinProxy = (Proxy) Launch.classLoader.getTransformers().stream().filter(transformer -> transformer instanceof Proxy).findFirst().get();
         try {
             //This will very likely break on the next major mixin release.

@@ -14,12 +14,12 @@ import net.minecraft.stats.StatCrafting;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 /** Rewrite most of the class to support an unlimited number of IDs (map rather than array). **/
@@ -38,7 +38,8 @@ public final class MixinStatList {
     private static final Map<Item, StatBase> OBJECTS_PICKED_UP_STATS_MAP = new HashMap<>();
     private static final Map<Item, StatBase> OBJECTS_DROPPED_STATS_MAP = new HashMap<>();
 
-    @Overwrite @Nullable public static StatBase getBlockStats(Block block) { return BLOCK_STAT_MAP.get(block); }
+    @Overwrite @Nullable
+    public static StatBase getBlockStats(Block block) { return BLOCK_STAT_MAP.get(block); }
     @Overwrite @Nullable public static StatBase getCraftStats(Item item) { return CRAFTS_STATS_MAP.get(item); }
     @Overwrite @Nullable public static StatBase getObjectUseStats(Item item) { return OBJECT_USE_STATS_MAP.get(item); }
     @Overwrite @Nullable public static StatBase getObjectBreakStats(Item item) { return OBJECT_BREAK_STATS_MAP.get(item); }

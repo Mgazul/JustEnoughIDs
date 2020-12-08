@@ -11,17 +11,13 @@
     "MixinBlockStateContainer",
     "MixinAnvilChunkLoader",
     "MixinBlock",
-    "MixinChunk",
-    "MixinSPacketChunkData",
     "MixinGenLayerVoronoiZoom",
     "MixinChunkPrimer",
-    "MixinChunkProviderServer",
     "MixinWorldInfo",
     "MixinEnchantmentHelper",
     "MixinItemEnchantedBook"
   ],
   "client": [
-    "client.MixinChunk",
     "client.MixinRenderGlobal",
     "client.MixinWorldSummary"
   ],

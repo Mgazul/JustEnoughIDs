@@ -1,11 +1,10 @@
 package org.dimdev.jeid;
 
+import org.jetbrains.annotations.Nullable;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
-
-import javax.annotation.Nullable;
 import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
@@ -24,7 +23,8 @@ public class JEIDLoadingPlugin implements IFMLLoadingPlugin {
 
     @Override public String[] getASMTransformerClass() { Obf.loadData(); return new String[]{ "org.dimdev.jeid.JEIDTransformer" }; }
     @Override public String getModContainerClass() { return null; }
-    @Nullable @Override public String getSetupClass() { return null; }
+    @Nullable
+    @Override public String getSetupClass() { return null; }
     @Override public void injectData(Map<String, Object> data) {}
     @Override public String getAccessTransformerClass() { return null; }
 }
