@@ -1,6 +1,6 @@
 package org.dimdev.jeid.mixin.core;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;

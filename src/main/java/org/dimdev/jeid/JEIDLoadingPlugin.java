@@ -1,6 +1,6 @@
 package org.dimdev.jeid;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
